@@ -29,6 +29,10 @@ document.addEventListener('alpine:init', () => {
                 { title: "Trato Directo sin Comisiones", desc: "Contacto directo con el propietario, sin gastos de agencia.", icon: "fa-user-check" }
             ],
             photos: [
+                "resources/building/main.png",
+                "resources/building/Screenshot 2026-07-30 at 17.04.45.png",
+                "resources/building/Screenshot 2026-07-30 at 17.04.51.png",
+                "resources/building/Screenshot 2026-07-30 at 17.05.07.png",
                 "resources/building/Screenshot 2026-07-30 at 14.19.03.png",
                 "resources/building/Screenshot 2026-07-30 at 14.17.04.png",
                 "resources/building/Screenshot 2026-07-30 at 14.18.31.png",
