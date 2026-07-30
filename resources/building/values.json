@@ -1,0 +1,35 @@
+{
+    "address": {
+        "street": "Bonifacio gonzalez Carreño",
+        "number": "15",
+        "city": "Langreo",
+        "province": "Asturias",
+        "country": "Spain",
+        "postal_code": "33900"
+    },
+    "flats": [
+        {
+            "id": "bgc15-4c-1",
+            "floor": "4",
+            "door": "1"
+        },
+        {
+            "id": "bgc15-4c-2",
+            "floor": "4",
+            "door": "2"
+        },
+        {
+            "id": "bgc15-4c-3",
+            "floor": "4",
+            "door": "3"
+        }
+    ],
+    "comodities": [
+        "Mercadona a 3 minutos",
+        "farmacia a 3 minutos",
+        "parada de bus a 2 minutos",
+        "parada de tren cercanias a 5 minutos",
+        "biblioteca a 15 minutos",
+        "polideportivo a 15 minutos"
+    ]
+}

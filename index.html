@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquiler de Pisos para Trabajadores y Empresas | Bonifacio 15 (Langreo, Asturias)</title>
+    <meta name="description"
+        content="Alquiler de pisos y habitaciones totalmente amueblados para trabajadores, técnicos y empresas en Langreo (Asturias). Factura oficial, WiFi incluido y estancias por meses. Contacto: baufcontrol@gmail.com">
+    <meta name="keywords"
+        content="alquiler trabajadores langreo, pisos tecnicos asturias, alquiler por meses langreo, pisos amueblados asturias, personal desplazado">
+
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="Alquiler de Pisos para Trabajadores - Bonifacio 15, Langreo">
+    <meta property="og:description"
+        content="Pisos confortables listos para entrar a vivir en Langreo (Asturias). Factura oficial para empresas, Internet WiFi, sábanas y toallas incluidas.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Alpine.js & Application JS -->
+    <script src="js/app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="apartmentApp">
+
+    <!-- ==========================================
+         HEADER / NAVBAR
+         ========================================== -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="#" class="logo-brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-house-user"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">BONIFACIO 15</span>
+                    <span class="logo-subtitle">Pisos para Trabajadores • Langreo</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#edificio" class="nav-link">Ubicación y Entorno</a></li>
+                    <li><a href="#pisos" class="nav-link">Pisos Disponibles</a></li>
+                    <li><a href="#ventajas" class="nav-link">Servicios Incluidos</a></li>
+                    <li><a href="#ubicacion" class="nav-link">Mapa</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-cta-group">
+                <a href="mailto:baufcontrol@gmail.com" class="btn-header-phone">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>baufcontrol@gmail.com</span>
+                </a>
+                <button @click="openContactModal()" class="btn-primary"
+                    style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">
+                    <i class="fa-regular fa-paper-plane"></i> Contactar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         HERO SECTION
+         ========================================== -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="badge-b2b">
+                    <i class="fa-solid fa-user-gear"></i> Ideal para Trabajadores y Técnicos Desplazados
+                </div>
+                <h1 class="hero-title">
+                    Alquiler de Pisos en <span>Langreo</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Alojamiento agradable, amueblado y equipado para que tu estancia de trabajo en la zona sea cómoda y
+                    sin complicaciones. Factura oficial para tu empresa, Internet WiFi incluido y trato directo.
+                </p>
+
+                <div class="hero-highlights">
+                    <div class="highlight-chip">
+                        <i class="fa-solid fa-wifi"></i> Internet WiFi incluido
+                    </div>
+                    <div class="highlight-chip">
+                        <i class="fa-solid fa-file-invoice"></i> Factura oficial para empresa
+                    </div>
+                    <div class="highlight-chip">
+                        <i class="fa-solid fa-bed"></i> Ropa de cama & toallas
+                    </div>
+                    <div class="highlight-chip">
+                        <i class="fa-solid fa-parking"></i> Aparcamiento público gratuito
+                    </div>
+                </div>
+
+                <div class="hero-cta-buttons">
+                    <button @click="openContactModal()" class="btn-primary">
+                        <i class="fa-regular fa-paper-plane"></i> Formulario de Contacto
+                    </button>
+                    <a href="mailto:baufcontrol@gmail.com" class="btn-secondary">
+                        <i class="fa-solid fa-envelope"></i> baufcontrol@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image-card">
+                <img :src="building.photos[0]" alt="Edificio Bonifacio 15 en Langreo">
+                <div class="hero-image-overlay">
+                    <div class="overlay-info">
+                        <h3>Inmuebles en Calle Bonifacio G. Carreño 15</h3>
+                        <p><i class="fa-solid fa-location-dot"></i> Langreo, Asturias (33900)</p>
+                    </div>
+                    <button @click="openLightbox(building.photos, 0, 'Edificio Bonifacio 15')" class="btn-secondary"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.82rem;">
+                        <i class="fa-solid fa-images"></i> Fotos Edificio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         LOCATION OF FLATS & BUILDING CONTEXT
+         ========================================== -->
+    <section id="edificio" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Ubicación y Entorno</span>
+                <h2 class="section-title">Inmuebles y Habitaciones Ubicados en Langreo</h2>
+                <p class="section-subtitle">Pisos y estancias independientes situados en el edificio de la Calle
+                    Bonifacio González Carreño 15, en una zona tranquila y con todos los servicios al lado.</p>
+            </div>
+
+            <div class="building-grid">
+                <div class="building-gallery-preview">
+                    <template x-for="(photo, index) in building.photos.slice(0, 4)" :key="index">
+                        <div class="building-photo-item" :class="index === 0 ? 'main-photo' : ''"
+                            @click="openLightbox(building.photos, index, 'Fotos del Edificio y Fachada')">
+                            <img :src="photo" alt="Foto del edificio Bonifacio 15">
+                            <div class="building-photo-overlay">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="building-info-card">
+                    <div class="building-address-box">
+                        <div class="building-address-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Dirección de los Inmuebles</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;" x-text="building.address.full">
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 1rem; margin-bottom: 1rem; color: var(--primary-navy);">Servicios básicos a
+                        pie de calle</h4>
+                    <div class="amenities-list">
+                        <template x-for="item in building.amenities" :key="item.text">
+                            <div class="amenity-item">
+                                <i :class="'fa-solid ' + item.icon"></i>
+                                <span x-text="item.text"></span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                        <button @click="openLightbox(building.photos, 0, 'Fotos del Edificio')" class="btn-card-gallery"
+                            style="flex: 1; padding: 0.75rem;">
+                            <i class="fa-solid fa-camera"></i> Ver fotos del exterior/edificio
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FLATS CATALOG & FILTERING
+         ========================================== -->
+    <section id="pisos" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Viviendas Disponibles</span>
+                <h2 class="section-title">Pisos y Habitaciones Amuebladas</h2>
+                <p class="section-subtitle">Elige el espacio que mejor se ajuste a tu estancia o al equipo de trabajo de
+                    tu empresa.</p>
+            </div>
+
+            <!-- Filtros Alpine.js -->
+            <div class="flats-filter-bar">
+                <button @click="filterRooms = 'all'"
+                    :class="filterRooms === 'all' ? 'filter-btn active' : 'filter-btn'">
+                    Todos los Pisos (3)
+                </button>
+                <button @click="filterRooms = '1'" :class="filterRooms === '1' ? 'filter-btn active' : 'filter-btn'">
+                    1 Habitación / Estudio (2)
+                </button>
+                <button @click="filterRooms = '2'" :class="filterRooms === '2' ? 'filter-btn active' : 'filter-btn'">
+                    2 Habitaciones (1)
+                </button>
+            </div>
+
+            <!-- Tarjetas de Pisos -->
+            <div class="flats-grid">
+                <template x-for="flat in filteredFlats" :key="flat.id">
+                    <div class="flat-card">
+                        <div class="flat-card-header">
+                            <img :src="flat.coverImage" :alt="flat.name">
+                            <div class="flat-status-badge" :class="flat.statusBadge" x-text="flat.status"></div>
+                            <div class="flat-photo-count">
+                                <i class="fa-solid fa-camera"></i> <span x-text="flat.photos.length + ' fotos'"></span>
+                            </div>
+                        </div>
+
+                        <div class="flat-card-body">
+                            <h3 class="flat-title" x-text="flat.name"></h3>
+                            <p class="flat-desc" x-text="flat.description"></p>
+
+                            <!-- Especificaciones técnicas del piso incluyendo Ocupación Máxima -->
+                            <div class="flat-specs-grid" style="grid-template-columns: repeat(4, 1fr);">
+                                <div class="spec-item">
+                                    <div class="spec-val" x-text="flat.sqm + ' m²'"></div>
+                                    <div class="spec-lbl">Superficie</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-val" x-text="flat.rooms"></div>
+                                    <div class="spec-lbl">Hab.</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-val" x-text="flat.bathrooms"></div>
+                                    <div class="spec-lbl">Baño</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-val" style="color: var(--accent-gold);"
+                                        x-text="flat.maxOccupancy + (flat.maxOccupancy === 1 ? ' pers.' : ' pers.')">
+                                    </div>
+                                    <div class="spec-lbl">Máx. Ocup.</div>
+                                </div>
+                            </div>
+
+                            <div class="flat-price-box">
+                                <div class="price-amount" x-text="flat.price + ' €'"></div>
+                                <div class="price-period">/ mes</div>
+                            </div>
+
+                            <div class="flat-commodities-tags">
+                                <template x-for="tag in flat.commodities.slice(0, 5)" :key="tag">
+                                    <span class="tag-mini" x-text="tag"></span>
+                                </template>
+                                <template x-if="flat.commodities.length > 5">
+                                    <span class="tag-mini" x-text="'+' + (flat.commodities.length - 5)"></span>
+                                </template>
+                            </div>
+
+                            <!-- Cuadro de Aviso de Gastos Específico por Piso -->
+                            <div
+                                style="margin-bottom: 1.25rem; padding: 0.65rem 0.85rem; background: #fff7ed; border-left: 4px solid #f97316; border-radius: 4px; font-size: 0.82rem; color: #9a3412;">
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <i class="fa-solid fa-snowflake" style="color: #dc2626;"></i> <strong>Calefacción
+                                        invierno:</strong> No incluida (gasto extra)
+                                </div>
+                            </div>
+
+                            <div class="flat-card-actions">
+                                <button @click="openLightbox(flat.photos, 0, flat.name)" class="btn-card-gallery">
+                                    <i class="fa-solid fa-images"></i> Ver fotos
+                                </button>
+                                <button @click="openContactModal(flat.name, flat.id)" class="btn-card-contact">
+                                    <i class="fa-solid fa-envelope"></i> Consultar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         WORKER BENEFITS & SERVICES
+         ========================================== -->
+    <section id="ventajas" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Servicios y Condiciones</span>
+                <h2 class="section-title">Pensado para la Comodidad del Trabajador</h2>
+                <p class="section-subtitle">Todo lo necesario para que los técnicos y trabajadores desplazados tengan un
+                    hogar agradable tras su día de trabajo.</p>
+            </div>
+
+            <div class="b2b-benefits-grid">
+                <template x-for="benefit in building.workerBenefits" :key="benefit.title">
+                    <div class="b2b-benefit-card">
+                        <div class="b2b-icon-box">
+                            <i :class="'fa-solid ' + benefit.icon"></i>
+                        </div>
+                        <h3 class="b2b-title" x-text="benefit.title"></h3>
+                        <p class="b2b-desc" x-text="benefit.desc"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         DIRECT CONTACT CTA BANNER
+         ========================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-banner">
+                <div class="cta-banner-grid">
+                    <div>
+                        <span class="section-tag" style="color: var(--accent-gold-light);">Atención Inmediata</span>
+                        <h2 class="cta-banner-title">¿Buscas piso para trabajadores en Langreo?</h2>
+                        <p class="cta-banner-desc">Contacta directamente por correo o formulario para conocer la disponibilidad de las habitaciones y pisos, solicitar presupuesto o coordinar una visita.</p>
+                    </div>
+
+                    <div class="cta-contact-box">
+                        <a href="mailto:baufcontrol@gmail.com" class="cta-email-card">
+                            <div class="cta-icon" style="background: #3b82f6;">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="cta-label">Correo Electrónico Directo</div>
+                                <div class="cta-value" style="font-size: 1.05rem;">baufcontrol@gmail.com</div>
+                            </div>
+                        </a>
+
+                        <button @click="openContactModal()" class="cta-phone-card"
+                            style="background: rgba(217, 119, 6, 0.15); border-color: rgba(217, 119, 6, 0.4); text-align: left; cursor: pointer;">
+                            <div class="cta-icon">
+                                <i class="fa-regular fa-paper-plane"></i>
+                            </div>
+                            <div>
+                                <div class="cta-label">Consulta Online</div>
+                                <div class="cta-value" style="font-size: 1.05rem;">Enviar Formulario</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         LOCATION & MAP
+         ========================================== -->
+    <section id="ubicacion" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Ubicación Estratégica</span>
+                <h2 class="section-title">En Langreo (Asturias)</h2>
+                <p class="section-subtitle">Buena comunicación con los polígonos de la zona, Oviedo y Gijón mediante
+                    transporte público o vehículo.</p>
+            </div>
+
+            <div class="location-grid">
+                <div class="map-card">
+                    <!-- Google Maps Embed para Calle Bonifacio Gonzalez Carreno 15 -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.5298150493863!2d-5.688194423454796!3d43.2822777711221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd36c07a9775f0a3%3A0x7d6a52ff37c86a34!2sCalle%20Bonifacio%20Gonz%C3%A1lez%20Carre%C3%B1o%2C%2015%2C%2033900%20Langreo%2C%20Asturias!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="location-info-list">
+                    <div class="location-info-item">
+                        <div class="location-badge-time">2 min a pie</div>
+                        <div>
+                            <strong style="display: block; color: var(--text-primary);">Parada de Autobús</strong>
+                            <span style="font-size: 0.88rem; color: var(--text-secondary);">Líneas frecuentes hacia
+                                Oviedo, Mieres y Valle del Nalón.</span>
+                        </div>
+                    </div>
+
+                    <div class="location-info-item">
+                        <div class="location-badge-time">3 min a pie</div>
+                        <div>
+                            <strong style="display: block; color: var(--text-primary);">Supermercado Mercadona &
+                                Farmacia</strong>
+                            <span style="font-size: 0.88rem; color: var(--text-secondary);">Compras diarias de comida y
+                                farmacia al lado del piso.</span>
+                        </div>
+                    </div>
+
+                    <div class="location-info-item">
+                        <div class="location-badge-time">5 min a pie</div>
+                        <div>
+                            <strong style="display: block; color: var(--text-primary);">Estación Tren Cercanías
+                                RENFE</strong>
+                            <span style="font-size: 0.88rem; color: var(--text-secondary);">Conexión de tren rápida a
+                                Oviedo.</span>
+                        </div>
+                    </div>
+
+                    <div class="location-info-item">
+                        <div class="location-badge-time">15 min a pie</div>
+                        <div>
+                            <strong style="display: block; color: var(--text-primary);">Polideportivo & Biblioteca
+                                Municipal</strong>
+                            <span style="font-size: 0.88rem; color: var(--text-secondary);">Instalaciones deportivas y
+                                espacios comunitarios.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo-brand" style="margin-bottom: 1rem;">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-house-user"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">BONIFACIO 15</span>
+                            <span class="logo-subtitle">Pisos para Trabajadores</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9rem; max-width: 400px; line-height: 1.6;">
+                        Alquiler de pisos y habitaciones amuebladas para trabajadores, técnicos y empresas en Langreo
+                        (Asturias). Factura oficial y estancias por meses.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="#edificio">Ubicación y Entorno</a></li>
+                        <li><a href="#pisos">Pisos Disponibles</a></li>
+                        <li><a href="#ventajas">Servicios Incluidos</a></li>
+                        <li><a href="#ubicacion">Mapa</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contacto Directo</h4>
+                    <ul class="footer-links">
+                        <li><i class="fa-solid fa-envelope" style="color: var(--accent-gold); width: 20px;"></i>
+                            baufcontrol@gmail.com</li>
+                        <li><i class="fa-solid fa-location-dot" style="color: var(--accent-gold); width: 20px;"></i>
+                            Bonifacio G. Carreño 15</li>
+                        <li><i class="fa-solid fa-city" style="color: var(--accent-gold); width: 20px;"></i> 33900
+                            Langreo, Asturias</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 Bonifacio 15 - Pisos para Trabajadores en Langreo.</div>
+                <div>Asturias - España</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         CONTACT MODAL (ALPINE.JS)
+         ========================================== -->
+    <div x-show="contactModalOpen" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0" class="modal-backdrop" style="display: none;"
+        @keydown.escape.window="closeContactModal()">
+
+        <div class="modal-card" @click.outside="closeContactModal()">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" x-text="inquiryTarget"></h3>
+                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.15rem;">Respuesta rápida por correo electrónico</p>
+                </div>
+                <button @click="closeContactModal()" class="modal-close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <template x-if="!formSubmitted">
+                    <form @submit.prevent="submitForm()">
+                        <div class="form-group">
+                            <label class="form-label">Nombre de la Empresa o Proyecto</label>
+                            <input type="text" x-model="formData.company" class="form-input"
+                                placeholder="Nombre de empresa o particular" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">Persona de Contacto</label>
+                                <input type="text" x-model="formData.name" class="form-input" placeholder="Tu nombre"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Teléfono de Contacto</label>
+                                <input type="tel" x-model="formData.phone" class="form-input" placeholder="Tu teléfono"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" x-model="formData.email" class="form-input"
+                                placeholder="correo@ejemplo.com" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">Piso de Interés</label>
+                                <select x-model="formData.flatId" class="form-select">
+                                    <option value="all">Cualquiera / Indiferente</option>
+                                    <option value="bgc15-4c-1">Estudio Práctico 4º-1 (500€)</option>
+                                    <option value="bgc15-4c-2">Apartamento 1D 4º-2 (600€)</option>
+                                    <option value="bgc15-4c-3">Apartamento 2D 4º-3 (800€)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Duración Estimada</label>
+                                <select x-model="formData.stayDuration" class="form-select">
+                                    <option value="1-3 meses">1 a 3 meses</option>
+                                    <option value="3-6 meses">3 a 6 meses</option>
+                                    <option value="mas-de-6-meses">Más de 6 meses</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Comentarios o fechas previstas de entrada</label>
+                            <textarea x-model="formData.comments" class="form-textarea" rows="3"
+                                placeholder="Indicar fechas de inicio del trabajo, etc."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary"
+                            style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar Consulta Directa
+                        </button>
+                    </form>
+                </template>
+
+                <template x-if="formSubmitted">
+                    <div style="text-align: center; padding: 2rem 1rem;">
+                        <i class="fa-solid fa-circle-check"
+                            style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">¡Consulta Lista para Enviar!</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Se abrirá tu gestor de correo
+                            para enviar el email directamente a baufcontrol@gmail.com.</p>
+                        <button @click="closeContactModal()" class="btn-secondary">Cerrar ventana</button>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         LIGHTBOX MODAL FOR PHOTOS (ALPINE.JS)
+         ========================================== -->
+    <div x-show="lightboxOpen" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0" class="lightbox-container" style="display: none;"
+        @keydown.escape.window="closeLightbox()" @keydown.left.window="prevPhoto()" @keydown.right.window="nextPhoto()">
+
+        <div class="lightbox-topbar">
+            <div>
+                <h4 style="font-size: 1.1rem; color: #ffffff;" x-text="lightboxTitle"></h4>
+                <span style="font-size: 0.85rem; color: var(--accent-gold-light);"
+                    x-text="'Imagen ' + (lightboxIndex + 1) + ' de ' + lightboxImages.length"></span>
+            </div>
+            <button @click="closeLightbox()" class="modal-close-btn" style="font-size: 2rem;">&times;</button>
+        </div>
+
+        <div class="lightbox-img-wrapper">
+            <button @click="prevPhoto()" class="lightbox-nav-btn prev">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <img :src="lightboxImages[lightboxIndex]" :alt="lightboxTitle">
+
+            <button @click="nextPhoto()" class="lightbox-nav-btn next">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div style="color: #94a3b8; font-size: 0.85rem;">
+            Usa las flechas del teclado <i class="fa-solid fa-arrow-left"></i> <i class="fa-solid fa-arrow-right"></i> o
+            los botones para navegar.
+        </div>
+    </div>
+
+    <!-- ==========================================
+         STICKY MOBILE CALL BAR
+         ========================================== -->
+    <div class="sticky-mobile-bar">
+        <div class="mobile-bar-grid">
+            <button @click="openContactModal()" class="btn-primary"
+                style="justify-content: center; font-size: 0.88rem; padding: 0.65rem;">
+                <i class="fa-regular fa-paper-plane"></i> Formulario de Contacto
+            </button>
+            <a href="mailto:baufcontrol@gmail.com" class="btn-secondary"
+                style="justify-content: center; font-size: 0.88rem; padding: 0.65rem;">
+                <i class="fa-solid fa-envelope"></i> Email Directo
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

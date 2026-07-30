@@ -1,0 +1,47 @@
+{
+    "price": {
+        "unit": "eur",
+        "value": 600,
+        "period": "month",
+        "currency": "eur",
+        "sqm": "40"
+    },
+    "rooms": {
+        "value": 1,
+        "type": "bedroom"
+    },
+    "kitchens": {
+        "value": 1,
+        "type": "kitchen"
+    },
+    "livingrooms": {
+        "value": 1,
+        "type": "livingroom"
+    },
+    "bathrooms": {
+        "value": 1,
+        "type": "bathroom"
+    },
+    "address": {
+        "street": "Bonifacio gonzalez Carreño",
+        "number": "15",
+        "floor": "4",
+        "city": "Langreo",
+        "province": "Asturias",
+        "country": "Spain",
+        "postal_code": "33900"
+    },
+    "comodities": [
+        "amueblado",
+        "ropa de cama",
+        "toallas",
+        "calefaccion",
+        "lavadora",
+        "vitroceramica",
+        "nevera",
+        "microondas",
+        "tv"
+    ],
+    "description": "apartamento con salon independiente, cocina independiente y todo amueblado en langreo",
+    "status": "disponible a partir de septiembre "
+}
