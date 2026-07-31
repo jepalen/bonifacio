@@ -148,6 +148,12 @@ document.addEventListener('alpine:init', () => {
         lightboxImages: [],
         lightboxIndex: 0,
         lightboxTitle: '',
+        touchStartX: 0,
+        touchEndX: 0,
+
+        // Commodities Modal State
+        commoditiesModalOpen: false,
+        selectedFlatForCommodities: null,
 
         // Contact Modal State
         contactModalOpen: false,
@@ -196,6 +202,51 @@ document.addEventListener('alpine:init', () => {
         prevPhoto() {
             if (this.lightboxImages.length === 0) return;
             this.lightboxIndex = (this.lightboxIndex - 1 + this.lightboxImages.length) % this.lightboxImages.length;
+        },
+
+        // Touch swipe handling for Lightbox
+        handleTouchStart(e) {
+            this.touchStartX = e.changedTouches[0].screenX;
+        },
+        handleTouchEnd(e) {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        },
+        handleSwipe() {
+            const swipeThreshold = 40;
+            if (this.touchEndX < this.touchStartX - swipeThreshold) {
+                this.nextPhoto();
+            } else if (this.touchEndX > this.touchStartX + swipeThreshold) {
+                this.prevPhoto();
+            }
+        },
+
+        // Commodities Modal actions
+        openCommoditiesModal(flat) {
+            this.selectedFlatForCommodities = flat;
+            this.commoditiesModalOpen = true;
+            document.body.style.overflow = 'hidden';
+        },
+
+        closeCommoditiesModal() {
+            this.commoditiesModalOpen = false;
+            document.body.style.overflow = 'auto';
+        },
+
+        getCommodityIcon(commodity) {
+            const text = commodity.toLowerCase();
+            if (text.includes('wifi') || text.includes('internet')) return 'fa-wifi';
+            if (text.includes('amueblado') || text.includes('dormitorio') || text.includes('habitaci')) return 'fa-bed';
+            if (text.includes('ropa de cama')) return 'fa-mattress-pillow';
+            if (text.includes('toalla')) return 'fa-shower';
+            if (text.includes('lavadora')) return 'fa-soap';
+            if (text.includes('vitro') || text.includes('cocina')) return 'fa-fire-burner';
+            if (text.includes('nevera')) return 'fa-box';
+            if (text.includes('microondas')) return 'fa-kitchen-set';
+            if (text.includes('tv')) return 'fa-tv';
+            if (text.includes('calefacci')) return 'fa-snowflake';
+            if (text.includes('salón')) return 'fa-couch';
+            return 'fa-circle-check';
         },
 
         // Modal de contacto
