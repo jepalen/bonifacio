@@ -263,7 +263,7 @@ document.addEventListener('alpine:init', () => {
                             price: data.price?.value || 0,
                             currency: "€",
                             period: "mes",
-                            status: this._capitalize(data.status?.trim()) || 'Consultar disponibilidad',
+                            status: this._capitalize(data.status?.trim()) || 'Contactar',
                             description: this._capitalize(data.description) || '',
                             commodities: this._buildCommodities(data, meta)
                         };
