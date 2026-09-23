@@ -132,7 +132,7 @@
 
                 <div class="hero-cta-buttons">
                     <button @click="openContactModal()" class="btn-primary">
-                        <i class="fa-regular fa-paper-plane"></i> Formulario de Contacto
+                        <i class="fa-brands fa-whatsapp"></i> Consultar disponibilidad por WhatsApp
                     </button>
                     <a href="#pisos" class="btn-secondary">
                         <i class="fa-solid fa-magnifying-glass"></i> Ver Pisos Disponibles
@@ -343,7 +343,7 @@
                                     <i class="fa-solid fa-images"></i> Ver fotos
                                 </button>
                                 <button @click="openContactModal(flat.name)" class="btn-card-contact">
-                                    <i class="fa-solid fa-envelope"></i> Consultar
+                                    <i class="fa-brands fa-whatsapp"></i> Consultar disponibilidad por WhatsApp
                                 </button>
                             </div>
                         </div>
@@ -389,7 +389,7 @@
                     <div>
                         <span class="section-tag" style="color: var(--accent-gold-light);">Atención Inmediata</span>
                         <h2 class="cta-banner-title">¿Buscas piso para trabajadores en Langreo?</h2>
-                        <p class="cta-banner-desc">Contacta directamente por correo o formulario para conocer la
+                        <p class="cta-banner-desc">Contacta directamente por WhatsApp para conocer la
                             disponibilidad de las habitaciones y pisos, solicitar presupuesto o coordinar una visita.
                         </p>
                     </div>
@@ -401,21 +401,11 @@
                                 <i class="fa-brands fa-whatsapp"></i>
                             </div>
                             <div>
-                                <div class="cta-label">WhatsApp / Formulario</div>
+                                <div class="cta-label">WhatsApp</div>
                                 <div class="cta-value" style="font-size: 1.05rem;">Contactar ahora</div>
                             </div>
                         </button>
 
-                        <button @click="openContactModal()" class="cta-phone-card"
-                            style="background: rgba(181, 133, 26, 0.15); border-color: rgba(181, 133, 26, 0.4); text-align: left; cursor: pointer;">
-                            <div class="cta-icon">
-                                <i class="fa-regular fa-paper-plane"></i>
-                            </div>
-                            <div>
-                                <div class="cta-label">Consulta Online</div>
-                                <div class="cta-value" style="font-size: 1.05rem;">Enviar Formulario</div>
-                            </div>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -569,8 +559,7 @@
                         Escríbenos directamente y te respondemos lo antes posible con disponibilidad, precios y visitas.
                     </p>
                     <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre: ' + inquiryTarget + '. ¿Podéis indicarme disponibilidad y precio?')"
-                        target="_blank" rel="noopener noreferrer"
-                        class="btn-whatsapp whatsapp-contact-btn"
+                        target="_blank" rel="noopener noreferrer" class="btn-whatsapp whatsapp-contact-btn"
                         @click="closeContactModal()">
                         <i class="fa-brands fa-whatsapp"></i> Abrir WhatsApp
                     </a>
@@ -656,10 +645,9 @@
                 </div>
 
                 <div style="margin-top: 1.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <button
-                        @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name)"
+                    <button @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name)"
                         class="btn-primary" style="flex: 1; justify-content: center;">
-                        <i class="fa-solid fa-paper-plane"></i> Consultar este piso
+                        <i class="fa-solid fa-paper-plane"></i> Consultar disponibilidad por WhatsApp
                     </button>
                     <button @click="closeCommoditiesModal()" class="btn-secondary" style="justify-content: center;">
                         Cerrar
@@ -676,7 +664,7 @@
         <div class="mobile-bar-grid">
             <button @click="openContactModal()" class="btn-primary"
                 style="justify-content: center; font-size: 0.88rem; padding: 0.65rem;">
-                <i class="fa-regular fa-paper-plane"></i> Formulario de Contacto
+                <i class="fa-regular fa-paper-plane"></i> Consultar disponibilidad
             </button>
             <button @click="openContactModal()" class="btn-whatsapp"
                 style="justify-content: center; font-size: 0.88rem; padding: 0.65rem;">
