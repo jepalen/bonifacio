@@ -342,7 +342,7 @@
                                 <button @click="openLightbox(flat.photos, 0, flat.name)" class="btn-card-gallery">
                                     <i class="fa-solid fa-images"></i> Ver fotos
                                 </button>
-                                <button @click="openContactModal(flat.name, flat.id)" class="btn-card-contact">
+                                <button @click="openContactModal(flat.name)" class="btn-card-contact">
                                     <i class="fa-solid fa-envelope"></i> Consultar
                                 </button>
                             </div>
@@ -550,106 +550,34 @@
         x-transition:leave-end="opacity-0" class="modal-backdrop" style="display: none;"
         @keydown.escape.window="closeContactModal()">
 
-        <div class="modal-card" @click.outside="closeContactModal()">
+        <div class="modal-card modal-card--compact" @click.outside="closeContactModal()">
             <div class="modal-header">
                 <div>
                     <h3 class="modal-title" x-text="inquiryTarget"></h3>
-                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.15rem;">Respuesta rápida por formulario o
-                        WhatsApp</p>
+                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.15rem;">Respuesta rápida por WhatsApp</p>
                 </div>
-                <button @click="closeContactModal()" class="modal-close-btn">&times;</button>
+                <button @click="closeContactModal()" class="modal-close-btn" aria-label="Cerrar">&times;</button>
             </div>
 
             <div class="modal-body">
-                <template x-if="!formSubmitted">
-                    <form @submit.prevent="submitForm()">
-                        <div class="form-group">
-                            <label class="form-label">Nombre de la Empresa o Proyecto</label>
-                            <input type="text" x-model="formData.company" class="form-input"
-                                placeholder="Nombre de empresa o particular" required>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div class="form-group">
-                                <label class="form-label">Persona de Contacto</label>
-                                <input type="text" x-model="formData.name" class="form-input" placeholder="Tu nombre"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Teléfono de Contacto</label>
-                                <input type="tel" x-model="formData.phone" class="form-input" placeholder="Tu teléfono"
-                                    required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Correo Electrónico</label>
-                            <input type="email" x-model="formData.email" class="form-input"
-                                placeholder="correo@ejemplo.com" required>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div class="form-group">
-                                <label class="form-label">Piso de Interés</label>
-                                <select x-model="formData.flatId" class="form-select">
-                                    <option value="all">Cualquiera / Indiferente</option>
-                                    <option value="bgc15-4c-1">Estudio Práctico Planta 4 (500€)</option>
-                                    <option value="bgc15-4c-2">Apartamento 1 Dormitorio Planta 4 (590€)</option>
-                                    <option value="bgc15-4c-3">Apartamento 2 Dormitorios Planta 4 (800€)</option>
-                                    <option value="bgc15-4d">Piso 4 Dormitorios Planta 4 (900€)</option>
-                                    <option value="dr-flemming-6">Piso 2 Dormitorios Dr. Fleming 6 (900€)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Duración Estimada</label>
-                                <select x-model="formData.stayDuration" class="form-select">
-                                    <option value="1-3 meses">1 a 3 meses</option>
-                                    <option value="3-6 meses">3 a 6 meses</option>
-                                    <option value="mas-de-6-meses">Más de 6 meses</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Comentarios o fechas previstas de entrada</label>
-                            <textarea x-model="formData.comments" class="form-textarea" rows="3"
-                                placeholder="Indicar fechas de inicio del trabajo, etc."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn-primary"
-                            style="width: 100%; justify-content: center; margin-top: 0.5rem;">
-                            <i class="fa-solid fa-paper-plane"></i> Enviar Consulta Directa
-                        </button>
-
-                        <div class="contact-modal-divider">
-                            <span>o contacta directamente</span>
-                        </div>
-
-                        <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre el alquiler de pisos en Langreo.')"
-                            target="_blank" rel="noopener noreferrer" class="btn-whatsapp"
-                            style="width: 100%; justify-content: center;">
-                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                        </a>
-                    </form>
-                </template>
-
-                <template x-if="formSubmitted">
-                    <div style="text-align: center; padding: 2rem 1rem;">
-                        <i class="fa-solid fa-circle-check"
-                            style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">¡Consulta Enviada!</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Tu gestor de correo se abrirá
-                            para enviar el formulario. También puedes escribirnos directamente por WhatsApp.</p>
-                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                            <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre el alquiler de pisos en Langreo.')"
-                                target="_blank" rel="noopener noreferrer" class="btn-whatsapp"
-                                style="justify-content: center;">
-                                <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
-                            </a>
-                            <button @click="closeContactModal()" class="btn-secondary">Cerrar ventana</button>
-                        </div>
+                <div class="whatsapp-contact-card">
+                    <div class="whatsapp-contact-icon">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </div>
-                </template>
+                    <h4 class="whatsapp-contact-title">Contacta por WhatsApp</h4>
+                    <p class="whatsapp-contact-desc">
+                        Escríbenos directamente y te respondemos lo antes posible con disponibilidad, precios y visitas.
+                    </p>
+                    <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre: ' + inquiryTarget + '. ¿Podéis indicarme disponibilidad y precio?')"
+                        target="_blank" rel="noopener noreferrer"
+                        class="btn-whatsapp whatsapp-contact-btn"
+                        @click="closeContactModal()">
+                        <i class="fa-brands fa-whatsapp"></i> Abrir WhatsApp
+                    </a>
+                    <button @click="closeContactModal()" class="btn-secondary whatsapp-contact-close">
+                        Cerrar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -729,7 +657,7 @@
 
                 <div style="margin-top: 1.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
                     <button
-                        @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name, selectedFlatForCommodities.id)"
+                        @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name)"
                         class="btn-primary" style="flex: 1; justify-content: center;">
                         <i class="fa-solid fa-paper-plane"></i> Consultar este piso
                     </button>

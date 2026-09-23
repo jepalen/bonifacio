@@ -820,6 +820,12 @@ img {
     border: 1px solid #bbf7d0;
 }
 
+.badge-unavailable {
+    background: rgba(100, 116, 139, 0.12);
+    color: #64748b;
+    border: 1px solid rgba(100, 116, 139, 0.25);
+}
+
 .flat-photo-count {
     position: absolute;
     bottom: 1rem;
@@ -1102,6 +1108,60 @@ img {
     color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+/* WhatsApp contact card (replaces old form in contact modal) */
+.modal-card--compact {
+    max-width: 420px;
+}
+
+.whatsapp-contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0.5rem 0.5rem;
+    gap: 1rem;
+}
+
+.whatsapp-contact-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #25d366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+}
+
+.whatsapp-contact-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin: 0;
+}
+
+.whatsapp-contact-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 300px;
+}
+
+.whatsapp-contact-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 0.85rem 1.5rem;
+}
+
+.whatsapp-contact-close {
+    width: 100%;
+    justify-content: center;
 }
 
 /* Contact modal divider */

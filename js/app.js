@@ -101,7 +101,7 @@ document.addEventListener('alpine:init', () => {
                 floor: "Planta 4",
                 door: "",
                 maxOccupancy: 2,
-                statusBadge: "badge-avail-aug",
+                statusBadge: "badge-unavailable",
                 coverImage: "resources/flats/bgc15-4c-3/photo-01.jpeg",
                 photos: [
                     "resources/flats/bgc15-4c-3/photo-01.jpeg",
@@ -184,22 +184,9 @@ document.addEventListener('alpine:init', () => {
 
         // ── Contact modal state ────────────────────────────────────────────
         contactModalOpen: false,
-        inquiryTarget: 'General',
-        formSubmitted: false,
-        formData: {
-            company: '',
-            name: '',
-            phone: '',
-            email: '',
-            flatId: 'all',
-            stayDuration: '1-3 meses',
-            comments: ''
-        },
+        inquiryTarget: 'Consulta de disponibilidad',
 
-        // Contact email (used in mailto: form submission only)
-        contactEmail: "baufcontrol@gmail.com",
-
-        // WhatsApp — shown only inside the contact modal, not in page HTML
+        // WhatsApp — kept in JS only, never rendered in page HTML
         whatsappNumber: "+34627879433",
 
         // ── Computed ───────────────────────────────────────────────────────
@@ -405,12 +392,8 @@ document.addEventListener('alpine:init', () => {
 
         // ── Contact modal ──────────────────────────────────────────────────
 
-        openContactModal(flatName = null, flatId = 'all') {
-            this.inquiryTarget = flatName
-                ? `Consulta sobre: ${flatName}`
-                : 'Consulta de Disponibilidad y Precios';
-            if (flatId) this.formData.flatId = flatId;
-            this.formSubmitted = false;
+        openContactModal(flatName = null) {
+            this.inquiryTarget = flatName || 'Consulta de disponibilidad';
             this.contactModalOpen = true;
             document.body.style.overflow = 'hidden';
         },
@@ -418,27 +401,6 @@ document.addEventListener('alpine:init', () => {
         closeContactModal() {
             this.contactModalOpen = false;
             document.body.style.overflow = 'auto';
-        },
-
-        submitForm() {
-            this.formSubmitted = true;
-            setTimeout(() => {
-                const subject = encodeURIComponent(
-                    `Consulta Alquiler Trabajadores - ${this.formData.name || 'Interesado'}`
-                );
-                const body = encodeURIComponent(
-                    `Hola,\n\nMe gustaría solicitar información sobre el alquiler de pisos para trabajadores en Langreo.\n\n` +
-                    `Empresa / Referencia: ${this.formData.company}\n` +
-                    `Contacto: ${this.formData.name}\n` +
-                    `Teléfono: ${this.formData.phone}\n` +
-                    `Email: ${this.formData.email}\n` +
-                    `Piso de interés: ${this.formData.flatId}\n` +
-                    `Duración estimada: ${this.formData.stayDuration}\n` +
-                    `Notas: ${this.formData.comments}\n\n` +
-                    `Gracias.`
-                );
-                window.location.href = `mailto:${this.contactEmail}?subject=${subject}&body=${body}`;
-            }, 600);
         }
     }));
 });
