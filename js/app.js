@@ -1,6 +1,26 @@
+/**
+ * apartmentApp — Alpine.js component for Bonifacio 15 flat rental site.
+ *
+ * Data strategy:
+ *   - On init, fetches resources/building/values.json to get the flat ID list
+ *     and building amenities.
+ *   - For each flat ID, fetches resources/flats/<id>/values.json for price,
+ *     rooms, bathrooms, etc.
+ *   - Display-only data that doesn't exist in the JSON files (photo paths,
+ *     display names, badge CSS classes, max occupancy) lives in `flatMeta`
+ *     below. This is the only place to update when adding a new flat.
+ *   - To add a new flat: create the folder + values.json + photos, then add
+ *     one entry to `flatMeta` and one <option> in the contact form select.
+ */
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('apartmentApp', () => ({
-        // Datos del Edificio y Ubicación
+
+        // ── Loading state ──────────────────────────────────────────────────
+        loading: true,
+        loadError: false,
+
+        // ── Building data (populated from fetch) ───────────────────────────
         building: {
             name: "Pisos Bonifacio 15",
             address: {
@@ -12,14 +32,7 @@ document.addEventListener('alpine:init', () => {
                 postal_code: "33900",
                 full: "Calle Bonifacio González Carreño 15, 33900 Langreo, Asturias"
             },
-            amenities: [
-                { text: "Mercadona a 3 minutos a pie", icon: "fa-shopping-cart" },
-                { text: "Farmacia a 3 minutos a pie", icon: "fa-notes-medical" },
-                { text: "Parada de autobús a 2 minutos", icon: "fa-bus" },
-                { text: "Estación de Tren Cercanías a 5 minutos", icon: "fa-train" },
-                { text: "Biblioteca municipal a 15 minutos", icon: "fa-book" },
-                { text: "Polideportivo municipal a 15 minutos", icon: "fa-dumbbell" }
-            ],
+            amenities: [],
             workerBenefits: [
                 { title: "Internet WiFi Incluido", desc: "Conexión a internet incluida en el precio para que puedas trabajar o navegar.", icon: "fa-wifi" },
                 { title: "Factura Oficial para Empresas", desc: "Emitimos factura oficial de alquiler para justificación de gastos.", icon: "fa-file-invoice" },
@@ -30,120 +43,132 @@ document.addEventListener('alpine:init', () => {
             ],
             photos: [
                 "resources/building/main.png",
-                "resources/building/Screenshot 2026-07-30 at 17.04.45.png",
-                "resources/building/Screenshot 2026-07-30 at 17.04.51.png",
-                "resources/building/Screenshot 2026-07-30 at 17.05.07.png",
-                "resources/building/Screenshot 2026-07-30 at 14.19.03.png",
-                "resources/building/Screenshot 2026-07-30 at 14.17.04.png",
-                "resources/building/Screenshot 2026-07-30 at 14.18.31.png",
-                "resources/building/Screenshot 2026-07-30 at 14.11.20.png",
-                "resources/building/Screenshot 2026-07-30 at 14.23.22.png",
-                "resources/building/Screenshot 2026-07-30 at 14.23.45.png"
+                "resources/building/building-01.png",
+                "resources/building/building-02.png",
+                "resources/building/building-03.png",
+                "resources/building/building-04.png",
+                "resources/building/building-05.png",
+                "resources/building/building-06.png",
+                "resources/building/building-07.png",
+                "resources/building/building-08.png",
+                "resources/building/building-09.png"
             ]
         },
 
-        // Datos de Pisos y Habitaciones
-        flats: [
-            {
-                id: "bgc15-4c-1",
+        // ── Flat display metadata (photo paths + display names don't live in JSON) ──
+        // To add a new flat: add its ID to building/values.json AND add an entry here.
+        flatMeta: {
+            "bgc15-4c-1": {
                 name: "Estudio Práctico 4º-1",
                 floor: "Planta 4",
                 door: "Puerta 1",
-                sqm: 20,
-                rooms: 1,
-                bathrooms: 1,
-                kitchens: 1,
                 maxOccupancy: 1,
-                price: 500,
-                currency: "€",
-                period: "mes",
-                status: "Disponible Sep 2026",
                 statusBadge: "badge-avail-sept",
-                description: "Apartaestudio acogedor y práctico. Capacidad máxima para 1 persona. Ideal para un trabajador o técnico desplazado.",
-                commodities: ["Internet WiFi (Incluido)", "Amueblado", "Ropa de cama", "Toallas", "Lavadora", "Vitrocerámica", "Nevera", "Microondas", "TV", "Calefacción (Gasto extra en invierno)"],
-                coverImage: "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30.jpeg",
+                coverImage: "resources/flats/bgc15-4c-1/photo-01.jpeg",
                 photos: [
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30.jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (1).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (2).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (3).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (4).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (5).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (6).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (7).jpeg",
-                    "resources/flats/bgc15-4c-1/WhatsApp Image 2026-07-30 at 12.38.30 (8).jpeg"
+                    "resources/flats/bgc15-4c-1/photo-01.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-02.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-03.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-04.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-05.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-06.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-07.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-08.jpeg",
+                    "resources/flats/bgc15-4c-1/photo-09.jpeg"
                 ]
             },
-            {
-                id: "bgc15-4c-2",
+            "bgc15-4c-2": {
                 name: "Apartamento 1D 4º-2",
                 floor: "Planta 4",
                 door: "Puerta 2",
-                sqm: 40,
-                rooms: 1,
-                livingrooms: 1,
-                bathrooms: 1,
-                kitchens: 1,
                 maxOccupancy: 1,
-                price: 600,
-                currency: "€",
-                period: "mes",
-                status: "Disponible Sep 2026",
                 statusBadge: "badge-avail-sept",
-                description: "Apartamento de 40m² con salón independiente, cocina y dormitorio. Capacidad máxima para 1 persona.",
-                commodities: ["Internet WiFi (Incluido)", "Salón independiente", "Amueblado", "Ropa de cama", "Toallas", "Lavadora", "Vitrocerámica", "Nevera", "Microondas", "TV", "Calefacción (Gasto extra en invierno)"],
-                coverImage: "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30.jpeg",
+                coverImage: "resources/flats/bgc15-4c-2/photo-01.jpeg",
                 photos: [
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30.jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30 (1).jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30 (2).jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30 (3).jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.30 (4).jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.31.jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.31 (1).jpeg",
-                    "resources/flats/bgc15-4c-2/WhatsApp Image 2026-07-30 at 12.23.31 (2).jpeg"
+                    "resources/flats/bgc15-4c-2/photo-01.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-02.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-03.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-04.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-05.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-06.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-07.jpeg",
+                    "resources/flats/bgc15-4c-2/photo-08.jpeg"
                 ]
             },
-            {
-                id: "bgc15-4c-3",
+            "bgc15-4c-3": {
                 name: "Apartamento 2D 4º-3",
                 floor: "Planta 4",
                 door: "Puerta 3",
-                sqm: 50,
-                rooms: 2,
-                bathrooms: 1,
-                kitchens: 1,
                 maxOccupancy: 2,
-                price: 800,
-                currency: "€",
-                period: "mes",
-                status: "Disponible Agosto 2026",
                 statusBadge: "badge-avail-aug",
-                description: "Piso completo de 50m² con 2 habitaciones independientes, cocina y baño. Capacidad máxima para 2 personas.",
-                commodities: ["Internet WiFi (Incluido)", "2 Dormitorios", "Amueblado", "Ropa de cama", "Toallas", "Lavadora", "Vitrocerámica", "Nevera", "Microondas", "TV", "Calefacción (Gasto extra en invierno)"],
-                coverImage: "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.39.jpeg",
+                coverImage: "resources/flats/bgc15-4c-3/photo-01.jpeg",
                 photos: [
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.39.jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.40.jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.40 (1).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.40 (2).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.40 (3).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.41.jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.41 (1).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.42.jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.42 (1).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.42 (2).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.42 (3).jpeg",
-                    "resources/flats/bgc15-4c-3/WhatsApp Image 2026-07-30 at 12.44.42 (4).jpeg"
+                    "resources/flats/bgc15-4c-3/photo-01.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-02.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-03.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-04.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-05.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-06.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-07.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-08.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-09.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-10.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-11.jpeg",
+                    "resources/flats/bgc15-4c-3/photo-12.jpeg"
+                ]
+            },
+            "bgc15-4d": {
+                name: "Apartamento 4D Planta 4-D",
+                floor: "Planta 4",
+                door: "Puerta D",
+                maxOccupancy: 4,
+                statusBadge: "badge-avail-sept",
+                coverImage: "resources/flats/bgc15-4d/photo-01.jpeg",
+                photos: [
+                    "resources/flats/bgc15-4d/photo-01.jpeg",
+                    "resources/flats/bgc15-4d/photo-02.jpeg",
+                    "resources/flats/bgc15-4d/photo-03.jpeg",
+                    "resources/flats/bgc15-4d/photo-04.jpeg",
+                    "resources/flats/bgc15-4d/photo-05.jpeg",
+                    "resources/flats/bgc15-4d/photo-06.jpeg",
+                    "resources/flats/bgc15-4d/photo-07.jpeg",
+                    "resources/flats/bgc15-4d/photo-08.jpeg",
+                    "resources/flats/bgc15-4d/photo-09.jpeg",
+                    "resources/flats/bgc15-4d/photo-10.jpeg"
+                ]
+            },
+            "dr-flemming-6": {
+                name: "Apartamento 2D Dr. Fleming 6",
+                floor: "Planta 3",
+                door: "Puerta D",
+                maxOccupancy: 2,
+                statusBadge: "badge-avail-aug",
+                coverImage: "resources/flats/dr-flemming-6/photo-01.jpeg",
+                photos: [
+                    "resources/flats/dr-flemming-6/photo-01.jpeg",
+                    "resources/flats/dr-flemming-6/photo-02.jpeg",
+                    "resources/flats/dr-flemming-6/photo-03.jpeg",
+                    "resources/flats/dr-flemming-6/photo-04.jpeg",
+                    "resources/flats/dr-flemming-6/photo-05.jpeg",
+                    "resources/flats/dr-flemming-6/photo-07.jpeg",
+                    "resources/flats/dr-flemming-6/photo-08.jpeg",
+                    "resources/flats/dr-flemming-6/photo-09.jpeg",
+                    "resources/flats/dr-flemming-6/photo-10.jpeg",
+                    "resources/flats/dr-flemming-6/photo-11.jpeg"
                 ]
             }
-        ],
+        },
 
-        // Estado del Filtro
+        // ── Flats list (populated by fetchData) ────────────────────────────
+        flats: [],
+
+        // ── Filter state ───────────────────────────────────────────────────
         filterRooms: 'all',
-        selectedFlat: null,
 
-        // Lightbox state
+        // Mobile nav state
+        mobileNavOpen: false,
+
+        // ── Lightbox state ─────────────────────────────────────────────────
         lightboxOpen: false,
         lightboxImages: [],
         lightboxIndex: 0,
@@ -151,11 +176,11 @@ document.addEventListener('alpine:init', () => {
         touchStartX: 0,
         touchEndX: 0,
 
-        // Commodities Modal State
+        // ── Commodities modal state ────────────────────────────────────────
         commoditiesModalOpen: false,
         selectedFlatForCommodities: null,
 
-        // Contact Modal State
+        // ── Contact modal state ────────────────────────────────────────────
         contactModalOpen: false,
         inquiryTarget: 'General',
         formSubmitted: false,
@@ -169,18 +194,140 @@ document.addEventListener('alpine:init', () => {
             comments: ''
         },
 
-        // Contact Details
+        // Contact email (used in mailto: form submission only)
         contactEmail: "baufcontrol@gmail.com",
 
-        // Computed properties
+        // WhatsApp — shown only inside the contact modal, not in page HTML
+        whatsappNumber: "+34627879433",
+
+        // ── Computed ───────────────────────────────────────────────────────
         get filteredFlats() {
-            if (this.filterRooms === 'all') {
-                return this.flats;
-            }
+            if (this.filterRooms === 'all') return this.flats;
             return this.flats.filter(f => f.rooms === parseInt(this.filterRooms));
         },
 
-        // Lightbox actions
+        // ── Data fetching ──────────────────────────────────────────────────
+
+        /**
+         * Fetches building/values.json then each flat's values.json.
+         * Merges JSON data with flatMeta (display-only data).
+         * Called automatically by Alpine's init hook (x-init on <body>).
+         */
+        async fetchData() {
+            try {
+                // 1. Load building data
+                const buildingRes = await fetch('resources/building/values.json');
+                if (!buildingRes.ok) throw new Error('No se pudo cargar el edificio.');
+                const buildingJson = await buildingRes.json();
+
+                // Map building amenities from JSON to display format
+                const amenityIconMap = {
+                    'mercadona':   'fa-shopping-cart',
+                    'farmacia':    'fa-notes-medical',
+                    'bus':         'fa-bus',
+                    'tren':        'fa-train',
+                    'biblioteca':  'fa-book',
+                    'polideportivo': 'fa-dumbbell'
+                };
+
+                this.building.amenities = buildingJson.comodities.map(text => {
+                    const key = Object.keys(amenityIconMap).find(k => text.toLowerCase().includes(k));
+                    return { text: this._capitalize(text), icon: key ? amenityIconMap[key] : 'fa-circle-check' };
+                });
+
+                // 2. Load each flat's values.json in parallel
+                const flatIds = buildingJson.flats.map(f => f.id);
+
+                // Also include flats not listed in building/values.json but present in flatMeta
+                const allIds = [...new Set([...flatIds, ...Object.keys(this.flatMeta)])];
+
+                const flatResults = await Promise.allSettled(
+                    allIds.map(id => fetch(`resources/flats/${id}/values.json`).then(r => {
+                        if (!r.ok) throw new Error(`404: ${id}`);
+                        return r.json().then(data => ({ id, data }));
+                    }))
+                );
+
+                // 3. Build flat objects by merging JSON + flatMeta
+                this.flats = flatResults
+                    .filter(r => r.status === 'fulfilled')
+                    .map(r => {
+                        const { id, data } = r.value;
+                        const meta = this.flatMeta[id] || {};
+
+                        return {
+                            id,
+                            name:         meta.name        || id,
+                            floor:        meta.floor       || '',
+                            door:         meta.door        || '',
+                            maxOccupancy: meta.maxOccupancy || data.rooms?.value || 1,
+                            statusBadge:  meta.statusBadge || 'badge-avail-sept',
+                            coverImage:   meta.coverImage  || '',
+                            photos:       meta.photos      || [],
+
+                            // From JSON
+                            sqm:         parseInt(data.price?.sqm)       || 0,
+                            rooms:       data.rooms?.value               || 0,
+                            livingrooms: data.livingrooms?.value         || 0,
+                            bathrooms:   data.bathrooms?.value           || 0,
+                            kitchens:    data.kitchens?.value            || 0,
+                            price:       data.price?.value               || 0,
+                            currency:    "€",
+                            period:      "mes",
+                            status:      this._capitalize(data.status?.trim()) || 'Consultar',
+                            description: this._capitalize(data.description)    || '',
+                            commodities: this._buildCommodities(data, meta)
+                        };
+                    });
+
+                this.loading = false;
+
+            } catch (err) {
+                console.error('Error cargando datos:', err);
+                this.loadError = true;
+                this.loading = false;
+            }
+        },
+
+        /**
+         * Builds the commodities array from JSON comodities + enriched display names.
+         */
+        _buildCommodities(data, meta) {
+            const commodityDisplayMap = {
+                'amueblado':     'Amueblado',
+                'ropa de cama':  'Ropa de cama',
+                'toallas':       'Toallas',
+                'calefaccion':   'Calefacción (Gasto extra en invierno)',
+                'lavadora':      'Lavadora',
+                'vitroceramica': 'Vitrocerámica',
+                'nevera':        'Nevera',
+                'microondas':    'Microondas',
+                'tv':            'TV'
+            };
+
+            const base = (data.comodities || []).map(c => commodityDisplayMap[c.toLowerCase()] || this._capitalize(c));
+
+            // Prepend WiFi (always included, not in JSON)
+            const result = ['Internet WiFi (Incluido)', ...base];
+
+            // Add contextual items based on JSON fields
+            if (data.livingrooms?.value) result.splice(1, 0, `${data.livingrooms.value} Salón independiente`);
+            if (data.rooms?.value > 1)   result.splice(1, 0, `${data.rooms.value} Dormitorios`);
+            if (data.bathrooms?.value > 1) result.splice(1, 0, `${data.bathrooms.value} Baños`);
+
+            return result;
+        },
+
+        /**
+         * Capitalises the first letter of a string.
+         */
+        _capitalize(str) {
+            if (!str) return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        // ── Lightbox actions ───────────────────────────────────────────────
+
         openLightbox(images, index = 0, title = 'Galería de fotos') {
             this.lightboxImages = images;
             this.lightboxIndex = index;
@@ -204,14 +351,17 @@ document.addEventListener('alpine:init', () => {
             this.lightboxIndex = (this.lightboxIndex - 1 + this.lightboxImages.length) % this.lightboxImages.length;
         },
 
-        // Touch swipe handling for Lightbox
+        // ── Touch swipe for lightbox ───────────────────────────────────────
+
         handleTouchStart(e) {
             this.touchStartX = e.changedTouches[0].screenX;
         },
+
         handleTouchEnd(e) {
             this.touchEndX = e.changedTouches[0].screenX;
             this.handleSwipe();
         },
+
         handleSwipe() {
             const swipeThreshold = 40;
             if (this.touchEndX < this.touchStartX - swipeThreshold) {
@@ -221,7 +371,8 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
-        // Commodities Modal actions
+        // ── Commodities modal ──────────────────────────────────────────────
+
         openCommoditiesModal(flat) {
             this.selectedFlatForCommodities = flat;
             this.commoditiesModalOpen = true;
@@ -245,13 +396,17 @@ document.addEventListener('alpine:init', () => {
             if (text.includes('microondas')) return 'fa-kitchen-set';
             if (text.includes('tv')) return 'fa-tv';
             if (text.includes('calefacci')) return 'fa-snowflake';
-            if (text.includes('salón')) return 'fa-couch';
+            if (text.includes('salón') || text.includes('salon')) return 'fa-couch';
+            if (text.includes('baño') || text.includes('bano')) return 'fa-bath';
             return 'fa-circle-check';
         },
 
-        // Modal de contacto
+        // ── Contact modal ──────────────────────────────────────────────────
+
         openContactModal(flatName = null, flatId = 'all') {
-            this.inquiryTarget = flatName ? `Consulta sobre: ${flatName}` : 'Consulta de Disponibilidad y Precios';
+            this.inquiryTarget = flatName
+                ? `Consulta sobre: ${flatName}`
+                : 'Consulta de Disponibilidad y Precios';
             if (flatId) this.formData.flatId = flatId;
             this.formSubmitted = false;
             this.contactModalOpen = true;
@@ -266,7 +421,9 @@ document.addEventListener('alpine:init', () => {
         submitForm() {
             this.formSubmitted = true;
             setTimeout(() => {
-                const subject = encodeURIComponent(`Consulta Alquiler Trabajadores - ${this.formData.name || 'Interesado'}`);
+                const subject = encodeURIComponent(
+                    `Consulta Alquiler Trabajadores - ${this.formData.name || 'Interesado'}`
+                );
                 const body = encodeURIComponent(
                     `Hola,\n\nMe gustaría solicitar información sobre el alquiler de pisos para trabajadores en Langreo.\n\n` +
                     `Empresa / Referencia: ${this.formData.company}\n` +

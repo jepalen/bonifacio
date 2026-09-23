@@ -1,7 +1,7 @@
 {
     "price": {
         "unit": "eur",
-        "value": 600,
+        "value": 590,
         "period": "month",
         "currency": "eur",
         "sqm": "40"
@@ -43,5 +43,5 @@
         "tv"
     ],
     "description": "apartamento con salon independiente, cocina independiente y todo amueblado en langreo",
-    "status": "disponible a partir de septiembre "
+    "status": "disponible a partir de octubre "
 }

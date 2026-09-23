@@ -1,13 +1,13 @@
 {
     "price": {
         "unit": "eur",
-        "value": 800,
+        "value": 900,
         "period": "month",
         "currency": "eur",
-        "sqm": "50"
+        "sqm": "100"
     },
     "rooms": {
-        "value": 2,
+        "value": 4,
         "type": "bedroom"
     },
     "kitchens": {
@@ -15,7 +15,7 @@
         "type": "kitchen"
     },
     "bathrooms": {
-        "value": 1,
+        "value": 2,
         "type": "bathroom"
     },
     "address": {
@@ -38,6 +38,6 @@
         "microondas",
         "tv"
     ],
-    "description": "apartamento con cocina,baño y dos habitaciones amueblado en langreo",
-    "status": "actualmente no disponible "
+    "description": "apartamento con cocina,baño y cuatro habitaciones amueblado en langreo",
+    "status": "disponible "
 }

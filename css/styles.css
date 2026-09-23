@@ -11,10 +11,10 @@
     --navy-light: #1e293b;
     --navy-lighter: #334155;
     
-    --accent-gold: #d97706;
-    --accent-gold-hover: #b45309;
-    --accent-gold-light: #fef3c7;
-    --accent-gold-glow: rgba(217, 119, 6, 0.25);
+    --accent-gold: #b5851a;
+    --accent-gold-hover: #8f6514;
+    --accent-gold-light: #fdf6e3;
+    --accent-gold-glow: rgba(181, 133, 26, 0.25);
 
     --bg-page: #f8fafc;
     --bg-surface: #ffffff;
@@ -32,6 +32,13 @@
     --success-text: #15803d;
     --warning-bg: #ffedd5;
     --warning-text: #c2410c;
+
+    /* Utility / Brand Colors */
+    --whatsapp-green: #25d366;
+    --whatsapp-green-hover: #20ba5a;
+    --section-alt-bg: #ffffff;
+    --danger: #dc2626;
+    --info-muted: #cbd5e1;
 
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -229,6 +236,73 @@ img {
     font-size: 1.5rem;
     color: #fff;
     background: transparent;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.mobile-nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile nav dropdown panel */
+.mobile-nav {
+    display: none; /* shown via Alpine x-show on ≤768px */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--navy-light);
+    padding: 0.5rem 0 1rem;
+}
+
+.mobile-nav-menu {
+    list-style: none;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mobile-nav-link {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+    color: #ffffff;
+    padding-left: 1rem;
+}
+
+.mobile-nav-link--email {
+    color: var(--accent-gold-light);
+    border-bottom: none;
+    margin-top: 0.25rem;
+}
+
+/* Heating notice card (replaces inline styles) */
+.heating-notice {
+    margin-bottom: 1.25rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--warning-bg);
+    border-left: 4px solid #f97316;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: var(--warning-text);
+}
+
+.heating-notice__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.heating-notice__icon {
+    color: var(--danger);
 }
 
 /* ==========================================================================
@@ -371,7 +445,7 @@ img {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    background: #25d366;
+    background: var(--whatsapp-green);
     color: #ffffff;
     font-weight: 600;
     padding: 0.85rem 1.5rem;
@@ -382,7 +456,7 @@ img {
 }
 
 .btn-whatsapp:hover {
-    background: #20ba5a;
+    background: var(--whatsapp-green-hover);
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
 }
@@ -433,7 +507,7 @@ img {
 }
 
 .section-alt {
-    background-color: #ffffff;
+    background-color: var(--section-alt-bg);
 }
 
 .section-header {
@@ -568,6 +642,40 @@ img {
 .amenity-item i {
     color: var(--accent-gold);
     width: 20px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Flats Loading State
+   ========================================================================== */
+
+.flats-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.flats-loading__spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--accent-gold-light);
+    border-top-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.flats-loading__text {
+    color: var(--text-muted);
+    font-size: 0.95rem;
     text-align: center;
 }
 
@@ -979,6 +1087,24 @@ img {
     letter-spacing: 0.05em;
 }
 
+/* Contact modal divider */
+.contact-modal-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.contact-modal-divider::before,
+.contact-modal-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
 .cta-value {
     font-family: var(--font-heading);
     font-size: 1.2rem;
@@ -1379,7 +1505,25 @@ img {
     }
 
     .nav-menu {
-        display: none; /* Can be toggled if needed */
+        display: none;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    /* Allow Alpine x-show to control visibility on mobile */
+    .mobile-nav[style*="display: none"] {
+        display: none !important;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    /* Hide desktop email CTA in header on mobile to keep navbar clean */
+    .btn-header-phone {
+        display: none;
     }
 
     .building-grid {
