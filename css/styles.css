@@ -612,6 +612,23 @@ img {
     border-bottom: 1px solid var(--border-color);
 }
 
+.building-address-secondary {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.flat-alt-address {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    margin-top: -0.2rem;
+}
+
 .building-address-icon {
     width: 48px;
     height: 48px;

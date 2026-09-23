@@ -16,7 +16,8 @@
         content="Pisos confortables listos para entrar a vivir en Langreo (Asturias). Factura oficial para empresas, Internet WiFi, sábanas y toallas incluidas.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="resources/building/main.png">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,10 +67,7 @@
                     style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">
                     <i class="fa-regular fa-paper-plane"></i> Contactar
                 </button>
-                <button
-                    class="mobile-nav-toggle"
-                    @click="mobileNavOpen = !mobileNavOpen"
-                    :aria-expanded="mobileNavOpen"
+                <button class="mobile-nav-toggle" @click="mobileNavOpen = !mobileNavOpen" :aria-expanded="mobileNavOpen"
                     aria-label="Abrir menú de navegación">
                     <i :class="mobileNavOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
                 </button>
@@ -78,20 +76,21 @@
 
         <!-- Mobile nav dropdown (only visible on ≤768px) -->
         <nav class="mobile-nav" x-show="mobileNavOpen" @click.outside="mobileNavOpen = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 -translate-y-2"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 -translate-y-2"
+            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
             style="display: none;">
             <ul class="mobile-nav-menu">
-                <li><a href="#edificio" class="mobile-nav-link" @click="mobileNavOpen = false">Ubicación y Entorno</a></li>
+                <li><a href="#edificio" class="mobile-nav-link" @click="mobileNavOpen = false">Ubicación y Entorno</a>
+                </li>
                 <li><a href="#pisos" class="mobile-nav-link" @click="mobileNavOpen = false">Pisos Disponibles</a></li>
-                <li><a href="#ventajas" class="mobile-nav-link" @click="mobileNavOpen = false">Servicios Incluidos</a></li>
+                <li><a href="#ventajas" class="mobile-nav-link" @click="mobileNavOpen = false">Servicios Incluidos</a>
+                </li>
                 <li><a href="#ubicacion" class="mobile-nav-link" @click="mobileNavOpen = false">Mapa</a></li>
                 <li>
-                    <button @click="mobileNavOpen = false; openContactModal()" class="mobile-nav-link mobile-nav-link--email" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer; font-family: inherit;">
+                    <button @click="mobileNavOpen = false; openContactModal()"
+                        class="mobile-nav-link mobile-nav-link--email"
+                        style="background: none; border: none; width: 100%; text-align: left; cursor: pointer; font-family: inherit;">
                         <i class="fa-brands fa-whatsapp"></i> Contactar / WhatsApp
                     </button>
                 </li>
@@ -191,6 +190,11 @@
                             <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Dirección de los Inmuebles</h3>
                             <p style="color: var(--text-secondary); font-size: 0.95rem;" x-text="building.address.full">
                             </p>
+                            <p class="building-address-secondary">
+                                <i class="fa-solid fa-location-dot"
+                                    style="color: var(--accent-gold); font-size: 0.75rem;"></i>
+                                También en <strong>C/ Doctor Fleming 6, 3º-D</strong> · Langreo
+                            </p>
                         </div>
                     </div>
 
@@ -254,8 +258,10 @@
             </template>
             <template x-if="loadError">
                 <div class="flats-loading">
-                    <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; color: var(--warning-text); margin-bottom: 0.75rem;"></i>
-                    <p class="flats-loading__text">No se pudieron cargar los pisos. Recarga la página o contáctanos directamente.</p>
+                    <i class="fa-solid fa-circle-exclamation"
+                        style="font-size: 2rem; color: var(--warning-text); margin-bottom: 0.75rem;"></i>
+                    <p class="flats-loading__text">No se pudieron cargar los pisos. Recarga la página o contáctanos
+                        directamente.</p>
                 </div>
             </template>
 
@@ -263,19 +269,25 @@
             <div class="flats-grid" x-show="!loading && !loadError">
                 <template x-for="flat in filteredFlats" :key="flat.id">
                     <div class="flat-card">
-                        <div class="flat-card-header" @click="openLightbox(flat.photos, 0, flat.name)" title="Ver fotos del piso">
+                        <div class="flat-card-header" @click="openLightbox(flat.photos, 0, flat.name)"
+                            title="Ver fotos del piso">
                             <img :src="flat.coverImage" :alt="flat.name">
                             <div class="flat-status-badge" :class="flat.statusBadge" x-text="flat.status"></div>
                             <div class="flat-photo-count">
                                 <i class="fa-solid fa-camera"></i> <span x-text="flat.photos.length + ' fotos'"></span>
                             </div>
                             <div class="flat-card-hover-overlay">
-                                <i class="fa-solid fa-images"></i> <span>Ver Galería (<span x-text="flat.photos.length"></span>)</span>
+                                <i class="fa-solid fa-images"></i> <span>Ver Galería (<span
+                                        x-text="flat.photos.length"></span>)</span>
                             </div>
                         </div>
 
                         <div class="flat-card-body">
-                            <h3 class="flat-title" @click="openLightbox(flat.photos, 0, flat.name)" title="Ver fotos" x-text="flat.name"></h3>
+                            <h3 class="flat-title" @click="openLightbox(flat.photos, 0, flat.name)" title="Ver fotos"
+                                x-text="flat.name"></h3>
+                            <p x-show="flat.id === 'dr-flemming-6'" class="flat-alt-address">
+                                <i class="fa-solid fa-location-dot"></i> C/ Doctor Fleming 6 · Langreo
+                            </p>
                             <p class="flat-desc" x-text="flat.description"></p>
 
                             <!-- Especificaciones técnicas del piso incluyendo Ocupación Máxima -->
@@ -310,7 +322,8 @@
                                     <span class="tag-mini" x-text="tag"></span>
                                 </template>
                                 <template x-if="flat.commodities.length > 5">
-                                    <button type="button" @click.stop="openCommoditiesModal(flat)" class="tag-mini tag-more" title="Ver todas las comodidades">
+                                    <button type="button" @click.stop="openCommoditiesModal(flat)"
+                                        class="tag-mini tag-more" title="Ver todas las comodidades">
                                         <i class="fa-solid fa-list-check" style="font-size: 0.75rem;"></i>
                                         <span x-text="'+' + (flat.commodities.length - 5) + ' más'"></span>
                                     </button>
@@ -376,11 +389,14 @@
                     <div>
                         <span class="section-tag" style="color: var(--accent-gold-light);">Atención Inmediata</span>
                         <h2 class="cta-banner-title">¿Buscas piso para trabajadores en Langreo?</h2>
-                        <p class="cta-banner-desc">Contacta directamente por correo o formulario para conocer la disponibilidad de las habitaciones y pisos, solicitar presupuesto o coordinar una visita.</p>
+                        <p class="cta-banner-desc">Contacta directamente por correo o formulario para conocer la
+                            disponibilidad de las habitaciones y pisos, solicitar presupuesto o coordinar una visita.
+                        </p>
                     </div>
 
                     <div class="cta-contact-box">
-                        <button @click="openContactModal()" class="cta-email-card" style="text-align: left; cursor: pointer; background: none; border: none; font-family: inherit;">
+                        <button @click="openContactModal()" class="cta-email-card"
+                            style="text-align: left; cursor: pointer; background: none; border: none; font-family: inherit;">
                             <div class="cta-icon" style="background: #25d366;">
                                 <i class="fa-brands fa-whatsapp"></i>
                             </div>
@@ -510,6 +526,8 @@
                             WhatsApp disponible</li>
                         <li><i class="fa-solid fa-location-dot" style="color: var(--accent-gold); width: 20px;"></i>
                             Bonifacio G. Carreño 15</li>
+                        <li><i class="fa-solid fa-location-dot" style="color: var(--accent-gold); width: 20px;"></i>
+                            Doctor Fleming 6</li>
                         <li><i class="fa-solid fa-city" style="color: var(--accent-gold); width: 20px;"></i> 33900
                             Langreo, Asturias</li>
                     </ul>
@@ -536,7 +554,8 @@
             <div class="modal-header">
                 <div>
                     <h3 class="modal-title" x-text="inquiryTarget"></h3>
-                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.15rem;">Respuesta rápida por formulario o WhatsApp</p>
+                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.15rem;">Respuesta rápida por formulario o
+                        WhatsApp</p>
                 </div>
                 <button @click="closeContactModal()" class="modal-close-btn">&times;</button>
             </div>
@@ -574,11 +593,11 @@
                                 <label class="form-label">Piso de Interés</label>
                                 <select x-model="formData.flatId" class="form-select">
                                     <option value="all">Cualquiera / Indiferente</option>
-                                    <option value="bgc15-4c-1">Estudio Práctico 4º-1 (500€)</option>
-                                    <option value="bgc15-4c-2">Apartamento 1D 4º-2 (590€)</option>
-                                    <option value="bgc15-4c-3">Apartamento 2D 4º-3 (800€)</option>
-                                    <option value="bgc15-4d">Apartamento 4D Planta 4-D (900€)</option>
-                                    <option value="dr-flemming-6">Apartamento 2D Dr. Fleming 6 (900€)</option>
+                                    <option value="bgc15-4c-1">Estudio Práctico Planta 4 (500€)</option>
+                                    <option value="bgc15-4c-2">Apartamento 1 Dormitorio Planta 4 (590€)</option>
+                                    <option value="bgc15-4c-3">Apartamento 2 Dormitorios Planta 4 (800€)</option>
+                                    <option value="bgc15-4d">Piso 4 Dormitorios Planta 4 (900€)</option>
+                                    <option value="dr-flemming-6">Piso 2 Dormitorios Dr. Fleming 6 (900€)</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -607,8 +626,7 @@
                         </div>
 
                         <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre el alquiler de pisos en Langreo.')"
-                            target="_blank" rel="noopener noreferrer"
-                            class="btn-whatsapp"
+                            target="_blank" rel="noopener noreferrer" class="btn-whatsapp"
                             style="width: 100%; justify-content: center;">
                             <i class="fa-brands fa-whatsapp"></i> WhatsApp
                         </a>
@@ -620,11 +638,11 @@
                         <i class="fa-solid fa-circle-check"
                             style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;"></i>
                         <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">¡Consulta Enviada!</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Tu gestor de correo se abrirá para enviar el formulario. También puedes escribirnos directamente por WhatsApp.</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Tu gestor de correo se abrirá
+                            para enviar el formulario. También puedes escribirnos directamente por WhatsApp.</p>
                         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                             <a :href="'https://wa.me/' + whatsappNumber.replace('+', '') + '?text=' + encodeURIComponent('Hola, me interesa información sobre el alquiler de pisos en Langreo.')"
-                                target="_blank" rel="noopener noreferrer"
-                                class="btn-whatsapp"
+                                target="_blank" rel="noopener noreferrer" class="btn-whatsapp"
                                 style="justify-content: center;">
                                 <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
                             </a>
@@ -649,8 +667,7 @@
         <div class="lightbox-topbar">
             <div class="lightbox-info">
                 <h4 class="lightbox-title-text" x-text="lightboxTitle"></h4>
-                <span class="lightbox-counter-pill"
-                    x-text="(lightboxIndex + 1) + ' / ' + lightboxImages.length"></span>
+                <span class="lightbox-counter-pill" x-text="(lightboxIndex + 1) + ' / ' + lightboxImages.length"></span>
             </div>
             <button @click="closeLightbox()" class="lightbox-close-btn" aria-label="Cerrar galería">
                 <i class="fa-solid fa-xmark"></i>
@@ -670,8 +687,10 @@
         </div>
 
         <div class="lightbox-footer-hint">
-            <span class="desktop-hint"><i class="fa-solid fa-arrow-left"></i> <i class="fa-solid fa-arrow-right"></i> Usa las flechas del teclado o toca las flechas</span>
-            <span class="mobile-hint"><i class="fa-solid fa-hand-pointer"></i> Desliza a los lados para cambiar de foto</span>
+            <span class="desktop-hint"><i class="fa-solid fa-arrow-left"></i> <i class="fa-solid fa-arrow-right"></i>
+                Usa las flechas del teclado o toca las flechas</span>
+            <span class="mobile-hint"><i class="fa-solid fa-hand-pointer"></i> Desliza a los lados para cambiar de
+                foto</span>
         </div>
     </div>
 
@@ -687,8 +706,10 @@
         <div class="modal-card" @click.outside="closeCommoditiesModal()">
             <div class="modal-header">
                 <div>
-                    <h3 class="modal-title" x-text="selectedFlatForCommodities ? selectedFlatForCommodities.name : ''"></h3>
-                    <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.15rem;">Equipamiento y servicios incluidos</p>
+                    <h3 class="modal-title" x-text="selectedFlatForCommodities ? selectedFlatForCommodities.name : ''">
+                    </h3>
+                    <p style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.15rem;">Equipamiento y servicios
+                        incluidos</p>
                 </div>
                 <button @click="closeCommoditiesModal()" class="modal-close-btn">&times;</button>
             </div>
@@ -700,13 +721,16 @@
                             <div class="commodity-icon-box">
                                 <i :class="'fa-solid ' + getCommodityIcon(item)"></i>
                             </div>
-                            <span x-text="item" style="font-weight: 500; font-size: 0.92rem; color: var(--text-primary);"></span>
+                            <span x-text="item"
+                                style="font-weight: 500; font-size: 0.92rem; color: var(--text-primary);"></span>
                         </div>
                     </template>
                 </div>
 
                 <div style="margin-top: 1.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <button @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name, selectedFlatForCommodities.id)" class="btn-primary" style="flex: 1; justify-content: center;">
+                    <button
+                        @click="closeCommoditiesModal(); openContactModal(selectedFlatForCommodities.name, selectedFlatForCommodities.id)"
+                        class="btn-primary" style="flex: 1; justify-content: center;">
                         <i class="fa-solid fa-paper-plane"></i> Consultar este piso
                     </button>
                     <button @click="closeCommoditiesModal()" class="btn-secondary" style="justify-content: center;">

@@ -51,7 +51,8 @@ document.addEventListener('alpine:init', () => {
                 "resources/building/building-06.png",
                 "resources/building/building-07.png",
                 "resources/building/building-08.png",
-                "resources/building/building-09.png"
+                "resources/building/building-09.png",
+                "resources/building/fleming6.jpg"
             ]
         },
 
@@ -59,9 +60,9 @@ document.addEventListener('alpine:init', () => {
         // To add a new flat: add its ID to building/values.json AND add an entry here.
         flatMeta: {
             "bgc15-4c-1": {
-                name: "Estudio Práctico 4º-1",
+                name: "Estudio Práctico Planta 4",
                 floor: "Planta 4",
-                door: "Puerta 1",
+                door: "",
                 maxOccupancy: 1,
                 statusBadge: "badge-avail-sept",
                 coverImage: "resources/flats/bgc15-4c-1/photo-01.jpeg",
@@ -78,9 +79,9 @@ document.addEventListener('alpine:init', () => {
                 ]
             },
             "bgc15-4c-2": {
-                name: "Apartamento 1D 4º-2",
+                name: "Apartamento 1 Dormitorio Planta 4",
                 floor: "Planta 4",
-                door: "Puerta 2",
+                door: "",
                 maxOccupancy: 1,
                 statusBadge: "badge-avail-sept",
                 coverImage: "resources/flats/bgc15-4c-2/photo-01.jpeg",
@@ -96,9 +97,9 @@ document.addEventListener('alpine:init', () => {
                 ]
             },
             "bgc15-4c-3": {
-                name: "Apartamento 2D 4º-3",
+                name: "Apartamento 2 Dormitorios Planta 4",
                 floor: "Planta 4",
-                door: "Puerta 3",
+                door: "",
                 maxOccupancy: 2,
                 statusBadge: "badge-avail-aug",
                 coverImage: "resources/flats/bgc15-4c-3/photo-01.jpeg",
@@ -118,9 +119,9 @@ document.addEventListener('alpine:init', () => {
                 ]
             },
             "bgc15-4d": {
-                name: "Apartamento 4D Planta 4-D",
+                name: "Piso 4 Dormitorios Planta 4",
                 floor: "Planta 4",
-                door: "Puerta D",
+                door: "",
                 maxOccupancy: 4,
                 statusBadge: "badge-avail-sept",
                 coverImage: "resources/flats/bgc15-4d/photo-01.jpeg",
@@ -138,13 +139,14 @@ document.addEventListener('alpine:init', () => {
                 ]
             },
             "dr-flemming-6": {
-                name: "Apartamento 2D Dr. Fleming 6",
+                name: "Piso 2 Dormitorios Dr. Fleming 6",
                 floor: "Planta 3",
-                door: "Puerta D",
+                door: "",
                 maxOccupancy: 2,
                 statusBadge: "badge-avail-aug",
-                coverImage: "resources/flats/dr-flemming-6/photo-01.jpeg",
+                coverImage: "resources/flats/dr-flemming-6/fleming6hall.jpg",
                 photos: [
+                    "resources/flats/dr-flemming-6/fleming6hall.jpg",
                     "resources/flats/dr-flemming-6/photo-01.jpeg",
                     "resources/flats/dr-flemming-6/photo-02.jpeg",
                     "resources/flats/dr-flemming-6/photo-03.jpeg",
@@ -222,11 +224,11 @@ document.addEventListener('alpine:init', () => {
 
                 // Map building amenities from JSON to display format
                 const amenityIconMap = {
-                    'mercadona':   'fa-shopping-cart',
-                    'farmacia':    'fa-notes-medical',
-                    'bus':         'fa-bus',
-                    'tren':        'fa-train',
-                    'biblioteca':  'fa-book',
+                    'mercadona': 'fa-shopping-cart',
+                    'farmacia': 'fa-notes-medical',
+                    'bus': 'fa-bus',
+                    'tren': 'fa-train',
+                    'biblioteca': 'fa-book',
                     'polideportivo': 'fa-dumbbell'
                 };
 
@@ -257,25 +259,25 @@ document.addEventListener('alpine:init', () => {
 
                         return {
                             id,
-                            name:         meta.name        || id,
-                            floor:        meta.floor       || '',
-                            door:         meta.door        || '',
+                            name: meta.name || id,
+                            floor: meta.floor || '',
+                            door: meta.door || '',
                             maxOccupancy: meta.maxOccupancy || data.rooms?.value || 1,
-                            statusBadge:  meta.statusBadge || 'badge-avail-sept',
-                            coverImage:   meta.coverImage  || '',
-                            photos:       meta.photos      || [],
+                            statusBadge: meta.statusBadge || 'badge-avail-sept',
+                            coverImage: meta.coverImage || '',
+                            photos: meta.photos || [],
 
                             // From JSON
-                            sqm:         parseInt(data.price?.sqm)       || 0,
-                            rooms:       data.rooms?.value               || 0,
-                            livingrooms: data.livingrooms?.value         || 0,
-                            bathrooms:   data.bathrooms?.value           || 0,
-                            kitchens:    data.kitchens?.value            || 0,
-                            price:       data.price?.value               || 0,
-                            currency:    "€",
-                            period:      "mes",
-                            status:      this._capitalize(data.status?.trim()) || 'Consultar',
-                            description: this._capitalize(data.description)    || '',
+                            sqm: parseInt(data.price?.sqm) || 0,
+                            rooms: data.rooms?.value || 0,
+                            livingrooms: data.livingrooms?.value || 0,
+                            bathrooms: data.bathrooms?.value || 0,
+                            kitchens: data.kitchens?.value || 0,
+                            price: data.price?.value || 0,
+                            currency: "€",
+                            period: "mes",
+                            status: this._capitalize(data.status?.trim()) || 'Consultar',
+                            description: this._capitalize(data.description) || '',
                             commodities: this._buildCommodities(data, meta)
                         };
                     });
@@ -294,15 +296,15 @@ document.addEventListener('alpine:init', () => {
          */
         _buildCommodities(data, meta) {
             const commodityDisplayMap = {
-                'amueblado':     'Amueblado',
-                'ropa de cama':  'Ropa de cama',
-                'toallas':       'Toallas',
-                'calefaccion':   'Calefacción (Gasto extra en invierno)',
-                'lavadora':      'Lavadora',
+                'amueblado': 'Amueblado',
+                'ropa de cama': 'Ropa de cama',
+                'toallas': 'Toallas',
+                'calefaccion': 'Calefacción (Gasto extra en invierno)',
+                'lavadora': 'Lavadora',
                 'vitroceramica': 'Vitrocerámica',
-                'nevera':        'Nevera',
-                'microondas':    'Microondas',
-                'tv':            'TV'
+                'nevera': 'Nevera',
+                'microondas': 'Microondas',
+                'tv': 'TV'
             };
 
             const base = (data.comodities || []).map(c => commodityDisplayMap[c.toLowerCase()] || this._capitalize(c));
@@ -312,7 +314,7 @@ document.addEventListener('alpine:init', () => {
 
             // Add contextual items based on JSON fields
             if (data.livingrooms?.value) result.splice(1, 0, `${data.livingrooms.value} Salón independiente`);
-            if (data.rooms?.value > 1)   result.splice(1, 0, `${data.rooms.value} Dormitorios`);
+            if (data.rooms?.value > 1) result.splice(1, 0, `${data.rooms.value} Dormitorios`);
             if (data.bathrooms?.value > 1) result.splice(1, 0, `${data.bathrooms.value} Baños`);
 
             return result;
